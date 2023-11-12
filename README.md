@@ -1,2 +1,3 @@
 # shoppingListApp
-Aplikace s nákupními seznamy
+Aplikace s nákupními seznamy 
+part II
