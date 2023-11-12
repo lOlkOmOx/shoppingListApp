@@ -34,13 +34,6 @@ function User(props) {
             img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?w=1380&t=st=1699686446~exp=1699687046~hmac=ccba31b12cf8eca085e5190e8995db8846f9447e97a96dd5119f7b2d9f1a32e2"
         },
         {   
-            id: "5",
-            name: "Nazařazený",
-            surname: "uživatel",
-            role: "none",
-            img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?w=1380&t=st=1699686446~exp=1699687046~hmac=ccba31b12cf8eca085e5190e8995db8846f9447e97a96dd5119f7b2d9f1a32e2"
-        },
-        {   
             id: "6",
             name: "Michaela",
             surname: "Čermáková",
@@ -51,14 +44,14 @@ function User(props) {
             id: "7",
             name: "Miroslav",
             surname: "Divný",
-            role: "user",
+            role: "none",
             img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?w=1380&t=st=1699686446~exp=1699687046~hmac=ccba31b12cf8eca085e5190e8995db8846f9447e97a96dd5119f7b2d9f1a32e2"
         },
         {   
             id: "8",
             name: "Stanislav",
             surname: "Tuček",
-            role: "user",
+            role: "none",
             img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?w=1380&t=st=1699686446~exp=1699687046~hmac=ccba31b12cf8eca085e5190e8995db8846f9447e97a96dd5119f7b2d9f1a32e2"
         },
     ];

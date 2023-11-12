@@ -18,6 +18,7 @@ function Name(props) {
     setInputValue(input.target.value);
   };
 
+//Měnění názvu, pokud není žádný název zadán, zobrazí se defaultní název.
   const changeName = () => {
     {inputValue==='' ? setName("<Seznam bez názvu>") : setName(inputValue);}
     closeModal();

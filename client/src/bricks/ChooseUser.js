@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { Button, Modal, Form, Alert } from "react-bootstrap";
 import Icon from '@mdi/react';
 import { mdiPlus, mdiArrowLeftBoldCircleOutline } from '@mdi/js';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import InputGroup from 'react-bootstrap/InputGroup';
 
 function ChooseUser(props) {
   
@@ -27,7 +24,7 @@ function ChooseUser(props) {
 
     return (
         <div>
-            {props.role === "Majitel" ? (
+            {props.role === "Majitel" ? ( 
                 <Button variant="success" onClick={openModal} style={{marginTop: "5px"}}>
                     <Icon path={mdiPlus} size={1} /> Přidat dalšího uživatele
                 </Button>) : (
@@ -35,7 +32,7 @@ function ChooseUser(props) {
                 ) }
             <Alert show={show} variant="danger" onClose={() => setShow(true)}>
                 <Alert.Heading>Seznam byl opuštěn</Alert.Heading>
-                <p>Uživatel bude přesměrován na routu Seznam nákupních seznamů, až bude hotova.</p>
+                <p>Uživatel bude přesměrován na routu Seznam nákupních seznamů, až bude hotová.</p>
             </Alert>
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header>
@@ -56,7 +53,8 @@ function ChooseUser(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>Zavřít</Button>
-                    {selectedUser === null ? (
+                    {/*Validace že bude nějaký uživatel vybrán, pokud nebude, bude tlačítko disabled.*/}
+                    {selectedUser === null ? ( 
                     <Button variant="primary" onClick={addUser} disabled> Přidat uživatele</Button>) : (
                         <Button variant="primary" onClick={addUser} > Přidat uživatele</Button> 
                     )}
