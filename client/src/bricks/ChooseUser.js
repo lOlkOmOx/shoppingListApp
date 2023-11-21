@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Alert } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import Icon from '@mdi/react';
 import { mdiPlus, mdiArrowLeftBoldCircleOutline } from '@mdi/js';
 
@@ -19,21 +19,18 @@ function ChooseUser(props) {
         setSelectedUser(null);
     };
 
-//Pomocné pro Alert
-    const [show, setShow] = useState(false);  
 
     return (
         <div>
-            {props.role === "Majitel" ? ( 
+            {props.owner ? ( 
                 <Button variant="success" onClick={openModal} style={{marginTop: "5px"}}>
                     <Icon path={mdiPlus} size={1} /> Přidat dalšího uživatele
-                </Button>) : (
-                <Button variant="danger" style={{marginTop: "5px"}} onClick={() => setShow(true)}><Icon path={mdiArrowLeftBoldCircleOutline} size={1} /> Opustit seznam</Button>
-                ) }
-            <Alert show={show} variant="danger" onClose={() => setShow(true)}>
-                <Alert.Heading>Seznam byl opuštěn</Alert.Heading>
-                <p>Uživatel bude přesměrován na routu Seznam nákupních seznamů, až bude hotová.</p>
-            </Alert>
+                </Button>
+            ) : (
+                <Button variant="danger" style={{marginTop: "5px"}} onClick={() => props.onClose()}>
+                    <Icon path={mdiArrowLeftBoldCircleOutline} size={1} /> Opustit seznam
+                </Button>
+            ) }
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header>
                     <Modal.Title>Vyberte uživatele</Modal.Title>
@@ -53,9 +50,9 @@ function ChooseUser(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>Zavřít</Button>
-                    {/*Validace že bude nějaký uživatel vybrán, pokud nebude, bude tlačítko disabled.*/}
                     {selectedUser === null ? ( 
-                    <Button variant="primary" onClick={addUser} disabled> Přidat uživatele</Button>) : (
+                        <Button variant="primary" onClick={addUser} disabled> Přidat uživatele</Button>
+                    ) : (
                         <Button variant="primary" onClick={addUser} > Přidat uživatele</Button> 
                     )}
                 </Modal.Footer>

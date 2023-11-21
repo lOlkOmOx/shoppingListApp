@@ -5,36 +5,35 @@ import { mdiRename } from '@mdi/js';
 
 function Name(props) {
 
-//Pomocné pro modal na přejmenování seznamu
   const [show, setShow] = useState(false);
   const closeModal = () => setShow(false);
   const openModal = () => setShow(true);
 
-  const [name, setName] = useState("Páteční nákup v Kauflandu"); //Defaultní název nákupního seznamu
-  const [inputValue, setInputValue] = useState(''); //Input na přejmenování
+  const [name, setName] = useState(props.name); 
+  const [inputValue, setInputValue] = useState(''); 
 
-//Přejmenování seznamu
   const newNameInput = (input) => {
     setInputValue(input.target.value);
   };
 
-//Měnění názvu, pokud není žádný název zadán, zobrazí se defaultní název.
   const changeName = () => {
-    {inputValue==='' ? setName("<Seznam bez názvu>") : setName(inputValue);}
+    {inputValue === '' ? setName("Seznam bez názvu") : setName(inputValue);}
+    props.onListNameChange(inputValue); 
     closeModal();
   };
 
   return (
-    <div class="csscontainer">
+    <div className="csscontainer">
       <Stack direction="horizontal">
         <div className="p-4">
           <h1 style={{textAlign: "center", fontWeight:"bold"}}>{name}</h1>
         </div>
-      {/*Zobrazení tlačítka s podmínkou, že je majitelem*/}
-        <div className="p-4 ms-auto"> {props.role === "Majitel" ? (
-          <Button variant="primary" onClick={openModal}>
-            <Icon path={mdiRename} size={1} />  Přejmenovat seznam
-          </Button>) : (null) } 
+        <div className="p-4 ms-auto"> 
+          {props.owner === true ? (
+            <Button variant="primary" onClick={openModal}>
+              <Icon path={mdiRename} size={1} />  Přejmenovat seznam
+            </Button>
+          ) : (null) } 
         </div>
       </Stack>
         
@@ -49,7 +48,7 @@ function Name(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>Zrušit</Button>
-            <Button variant="primary" onClick={changeName}>Uložit</Button>
+          <Button variant="primary" onClick={changeName} disabled={inputValue.trim() === ''}>Uložit</Button>
         </Modal.Footer>
       </Modal>
     </div>

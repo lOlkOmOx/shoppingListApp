@@ -1,87 +1,75 @@
 import React, { useState } from "react";
-import { Button, Modal, Form } from 'react-bootstrap'
+import { Button, Modal, Form, Table } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Item from './Item'
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 
-function Items() {
-  const [showModal, setModalShow] = useState(false); //Modalní okno, výchozí hodnota false
-  const [newItemName, setNewItemName] = useState(""); //Ipnut v modálním okně pro přidání položky
-  const [shoppingListItems, setShoppingListItems] = useState({ //Mockup dat
-    items: [
-      {
-        id: "1",
-        name: "5 kg brambor",
-        required: true
-      },
-      {
-        id: "2",
-        name: "2 kostky máslo",
-        required: true
-      },
-      {
-        id: "3",
-        name: "7 litrů mléka",
-        required: true
-      },
-      {
-        id: "4",
-        name: "10 rohlíků",
-        required: true
-      },
-      {
-        id: "5",
-        name: "1 chleba",
-        required: true
-      },
-      {
-        id: "6",
-        name: "20 deka šunky",
-        required: true
-      },
-    ],
-  });
+function Items(props) {
+  const [showModal, setModalShow] = useState(false); 
+  const [newItemName, setNewItemName] = useState("");
 
-// Pomocné pro modalní okno
   const closeModal = () => setModalShow(false);
   const openModal = () => setModalShow(true);
 
-// Přidání nové položky 
+  const itemFilter = () => {
+    setShowOnlyRequired(!showOnlyRequired);
+  };
+  const [showOnlyRequired, setShowOnlyRequired] = useState(false);      
+    
+  const setItemAsPurchased = (itemId) => {
+    const updatedItems = filteredItems.map(item => {
+      if (item.id === itemId) {
+        return { ...item, required: false };
+      }
+      return item;
+    });
+    setItems(updatedItems);
+  };
+
+  const [items, setItems] = useState(props.items)
+          
+  const filteredItems = showOnlyRequired ? items.filter(item => item.required) : items;
+
+  const deleteItem = (itemId) => {
+    const updatedItems = items.filter(item => item.id !== itemId);
+    setItems(updatedItems);
+  };
+
   const addItem = () => {
-    const newItem = {
-      id: Math.random().toString(),
-      name: newItemName,
-      required: true,
-    }; 
-
-// Aktualizace položek
-    setShoppingListItems({
-      items: [...shoppingListItems.items, newItem],
-    });
-
-// Uzavření modálu a promazání inputu
-    closeModal();
-    setNewItemName(""); //Promazání inputu na defaultní hodnotu
+    if (newItemName.trim() === '') {return}
+      const newItem = { id: Math.random().toString(), name: newItemName, required: true,};
+      const updatedItems = [...items, newItem]; 
+      setItems(updatedItems); 
+      closeModal(); 
+      setNewItemName(""); 
   };
-
-// Fce pro odebrání položky z mockupu
-  const removeItem = (updatedItems) => {
-    setShoppingListItems({ items: updatedItems });
-  };
-
-// Fce pro označení položky required: false v mockupu
-  const purchaseItem = (updatedItems) => {
-    setShoppingListItems({
-      items: updatedItems,
-    });
-  };
-
+        
   return (
-    <div>
-    {/* Seznam položek - komponenta */}
-      <Item shoppingListItems={shoppingListItems} removeItem={removeItem} itemPurchase={purchaseItem}/>
-    {/* Modal s inputem pro přidání nové položky */}
+    <div style={{padding: "10px"}} class="csscontainer">
+      <Table hover>
+        <thead>
+          <tr>
+            <th><h2>Položky</h2></th>
+            <th style={{ textAlign: 'right' }}>
+              <Button onClick={itemFilter}>{showOnlyRequired ? "Zobrazit všechny položky" : "Zobrazit pouze potřebné položky"}</Button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredItems.map((item) => (
+            <tr key={item.id}>
+              <td style={{ textDecoration: item.required ? ("none") : ("line-through") }}>{item.name}</td>
+              <td style={{ textAlign: 'right' }}>
+                {item.required ? (
+                  <Button variant="outline-primary" onClick={() => setItemAsPurchased(item.id)}>Zakoupené</Button>
+                ):(
+                  <Button variant="outline-success" disabled>Zakoupeno</Button> //Značka zakoupení
+                )} 
+                <Button variant="outline-danger" onClick={() => deleteItem(item.id)}>Smazat</Button></td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header>
           <Modal.Title>Přidat novou položku</Modal.Title>
@@ -92,12 +80,8 @@ function Items() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
-            Zavřít
-          </Button>
-          <Button variant="primary" onClick={addItem}>
-            Přidat
-          </Button>
+          <Button variant="secondary" onClick={closeModal}>Zavřít</Button>
+          <Button variant="primary" onClick={addItem}>Přidat</Button>
         </Modal.Footer>
       </Modal>
       <Button variant="success" onClick={openModal} style={{margin: "5px 0 10px"}}>
