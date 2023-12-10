@@ -4,7 +4,7 @@ import { mdiAccount } from '@mdi/js';
 import usersDataMockup from "../data/usersDataMockup";
 import Preview from "./Preview"
 import Show from "./Show"
-import { Button, Card, Stack, Modal } from "react-bootstrap"
+import { Button, Card, Stack, Modal, Spinner } from "react-bootstrap"
 
 function ShoppingListItem(props)  {
 
@@ -14,6 +14,8 @@ function ShoppingListItem(props)  {
     const owner = usersDataMockup.find(user => user.id === props.shoppingList.ownerId);
     const ownerName =  `${owner.name} ${owner.surname}`
     const [showModal, setShowModal] = useState(false);
+
+    const [archivingItemId, setArchivingItemId] = useState(null);
 
  return( 
     <div>
@@ -41,7 +43,7 @@ function ShoppingListItem(props)  {
                                 {showShow ? ( 
                                     <Show shoppingList={props.shoppingList} ownerName={ownerName} owner={true} onClose={() => setShowShow(false)} onListNameChange={props.onListNameChange}/>
                                 ) : (null)}
-                            <Button variant="outline-secondary" className="p-2"onClick={props.onArchive}>Archivovat</Button>
+                            <Button variant="outline-secondary" className="p-2" onClick={() => {setArchivingItemId(props.shoppingList.id); props.onArchive() }}>{props.archiving && archivingItemId === props.shoppingList.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : ("Archivovat")}</Button>
                             <Button variant="outline-danger" className="p-2" onClick={() => setShowModal(true)}>Smazat</Button></Stack> 
                     ) : (
                         <div>
@@ -59,7 +61,7 @@ function ShoppingListItem(props)  {
                             {showPreview ? ( 
                                 <Preview shoppingList={props.shoppingList} ownerName={ownerName} owner={true} onClose={() => setShowPreview(false)} />
                             ) : (null)}
-                        <Button variant="outline-secondary" className="p-2"onClick={props.onUnArchive}>Reaktivovat</Button>
+                        <Button variant="outline-secondary" className="p-2" onClick={() => {setArchivingItemId(props.shoppingList.id); props.onUnArchive() }}>{props.archiving && archivingItemId === props.shoppingList.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : ("Reaktivovat")}</Button>
                         <Button variant="outline-danger" className="p-2" onClick={() => setShowModal(true)}>Smazat</Button>
                     </Stack>  
                 ) : (
@@ -84,7 +86,12 @@ function ShoppingListItem(props)  {
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>Zrušit</Button>
-            <Button variant="danger" onClick={props.onDelete}>Smazat</Button>
+            <Button variant="danger" onClick={props.onDelete}>
+            {props.deleting ? (
+                    <Spinner animation="border" role="status" size="sm"></Spinner>
+                ) : (
+                    "Smazat"
+                )}</Button>
         </Modal.Footer>
     </Modal>  
     </div>
