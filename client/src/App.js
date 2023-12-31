@@ -3,11 +3,19 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './bricks/Home'
 import Customspinner from '../src/bricks/Spinner'
+import { Translation } from '../src/bricks/Translation';
+import Header from "./bricks/Header"
 
 function App() {
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  const [darkMode, setDarkMode] = useState(false)
+
+  const switchMode = () => {
+    setDarkMode(!darkMode)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,13 +34,16 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <Translation>
+    <div className={darkMode ? 'dark' : 'light'}>
     {loading ? (
       <div style={{height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}><Customspinner variant="Moon"/></div>
-    ):(<div className="App">
-      <Home/>
-    </div>)}
+    ):(<div className={darkMode ? 'dark' : 'light'}>
+      <Header switchMode={switchMode} dark={darkMode}/>
+      <Home dark={darkMode}/></div>
+    )}
     </div>
+    </Translation>
   );
 }
 

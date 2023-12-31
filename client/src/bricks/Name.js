@@ -3,8 +3,12 @@ import { Button, Modal, Form, Stack, Spinner } from 'react-bootstrap';
 import Icon from '@mdi/react';
 import { mdiRename } from '@mdi/js';
 import Customspinner from "./Spinner"
+import { useTranslation } from './Translation';
+
 
 function Name(props) {
+
+  const { t } = useTranslation()
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -39,19 +43,19 @@ function Name(props) {
     try {
       setRenamingList(true)
       await fakeServerRequest()
-      {inputValue === '' ? setName("Seznam bez názvu") : setName(inputValue);}
-      props.onListNameChange(inputValue);
+      {inputValue === '' ? setName("<NoName>") : setName(inputValue)}
+      props.onListNameChange(inputValue)
       setRenamingList(false)
-      closeModal();
+      closeModal()
     }
     catch (error) {
-        console.error('Chyba při vytváření seznamu:', error);
+        console.error('Error:', error)
     } 
 }
 
   return (
     <div className="csscontainer">
-      {error ? (<p>Chyba při načítání dat</p>):(<>
+      {error ? (<p>{t.dataFailed}</p>):(<>
       {loading ? (<Customspinner variant="Bounce"/>):(
       <Stack direction="horizontal">
         <div className="p-4">
@@ -60,22 +64,22 @@ function Name(props) {
         <div className="p-4 ms-auto"> 
           {props.owner === true ? (
             <Button variant="primary" onClick={openModal}>
-              <Icon path={mdiRename} size={1} />  Přejmenovat seznam
+              <Icon path={mdiRename} size={1}/>  <span className="respButton">{t.renameShoppingList}</span>
             </Button>
           ) : (null) } 
         </div>
       </Stack>)}</>)}
         
-      <Modal show={show} onHide={closeModal}>
+      <Modal show={show} onHide={closeModal} className={props.dark ? "darkk" : null}>
         <Modal.Header>
-          <Modal.Title>Přejmenování nákupního seznamu</Modal.Title>
+          <Modal.Title>{t.renameShoppingList}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form><Form.Control size="lg" type="text" placeholder="Nový název" value={inputValue} onChange={newNameInput} autoFocus/></Form>
+          <Form><Form.Control size="lg" type="text" placeholder={t.newName} value={inputValue} onChange={newNameInput} autoFocus/></Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>Zrušit</Button>
-          <Button variant="primary" onClick={changeName} disabled={inputValue.trim() === ''}>{renamingList ? (<Spinner animation="border" role="status" size="sm"></Spinner>):("Uložit")}</Button>
+          <Button variant="secondary" onClick={closeModal}> <>{t.cancel}</></Button>
+          <Button variant="primary" onClick={changeName} disabled={inputValue.trim() === ''}>{renamingList ? (<Spinner animation="border" role="status" size="sm"></Spinner>):(<>{t.save}</>)}</Button>
         </Modal.Footer>
       </Modal>
     </div>

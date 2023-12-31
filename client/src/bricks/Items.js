@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Table, Spinner } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Icon from '@mdi/react';
-import { mdiPlus } from '@mdi/js';
+import { mdiPlus, mdiTrashCanOutline, mdiCheck, mdiCartArrowDown, mdiCheckAll, mdiFilter } from '@mdi/js';
 import Customspinner from "./Spinner"
+import { useTranslation } from './Translation';
 
 function Items(props) {
+
+  const { t } = useTranslation()
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -49,7 +52,7 @@ function Items(props) {
       setItems(updatedItems)
       setPurchasingItem(false)
     } catch (error) {
-      console.error('Chyba při označování položky za zakoupenou:', error)
+      console.error('error:', error)
     } 
   }
 
@@ -64,7 +67,7 @@ function Items(props) {
         setItems(updatedItems)
         setDeletingItem(true)
     } catch (error) {
-        console.error('Chyba při mazání položky:', error)
+        console.error('error:', error)
     } 
 }
 
@@ -82,20 +85,20 @@ function Items(props) {
         closeModal() 
         setNewItemName("")
     } catch (error) {
-        console.error('Chyba při přidávání položky:', error)
+        console.error('error:', error)
     } 
 }
         
   return (
     <div style={{padding: "10px"}} class="csscontainer">
-      {error ? (<p>Chyba při získávání dat</p>):(<>
+      {error ? (<p>{t.dataFailed}</p>):(<>
       {loading ? (<Customspinner variant="Bounce"/>):(
       <Table hover>
         <thead>
           <tr>
-            <th><h2>Položky</h2></th>
+            <th><h2>{t.items}</h2></th>
             <th style={{ textAlign: 'right' }}>
-              <Button onClick={itemFilter}>{showOnlyRequired ? "Zobrazit všechny položky" : "Zobrazit pouze potřebné položky"}</Button>
+              <Button onClick={itemFilter}>{showOnlyRequired ? <><span className="respButton">{t.itemsFilterAll}  </span><Icon path={mdiCheckAll} size={1}/></> : <><span className="respButton">{t.itemsFilterOnlyRequired}  </span><Icon path={mdiFilter} size={1}/></>}</Button>
             </th>
           </tr>
         </thead>
@@ -105,32 +108,32 @@ function Items(props) {
               <td style={{ textDecoration: item.required ? ("none") : ("line-through") }}>{item.name}</td>
               <td style={{ textAlign: 'right' }}>
                 {item.required ? (
-                  <Button variant="outline-primary" onClick={() => {setItemAsPurchased(item.id); setPurchasingItemId(item.id)}}>{purchasingItem && purchasingItemId === item.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : ("Zakoupené")}</Button>
+                  <Button variant="outline-primary" onClick={() => {setItemAsPurchased(item.id); setPurchasingItemId(item.id)}}>{purchasingItem && purchasingItemId === item.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : (<><span className="respButton">{t.setAsBought}  </span><span><Icon size={1} path={mdiCartArrowDown}/></span></>)}</Button>
                 ):(
-                  <Button variant="outline-success" disabled>Zakoupeno</Button>
+                  <Button variant="outline-success" disabled><span className="respButton">{t.boughtIndicator}  </span><span className="onlyIcon"><Icon size={1} path={mdiCheck}></Icon></span></Button>
                 )} 
-                <Button variant="outline-danger" onClick={() => {deleteItem(item.id); setDeletingItemId(item.id)}}>{deletingItem && deletingItemId === item.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : ("Smazat")}</Button></td>
+                <Button variant="outline-danger" onClick={() => {deleteItem(item.id); setDeletingItemId(item.id)}}>{deletingItem && deletingItemId === item.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : (<><span className="respButton">{t.delete}  </span><span className="onlyIcon"><Icon size={1} path={mdiTrashCanOutline}/></span></>)}</Button></td>
             </tr>
           ))}
         </tbody>
       </Table>)}</>)}
-      <Modal show={showModal} onHide={closeModal}>
+      <Modal show={showModal} onHide={closeModal} className={props.dark ? "darkk" : null}>
         <Modal.Header>
-          <Modal.Title>Přidat novou položku</Modal.Title>
+          <Modal.Title>{t.addNewItem}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Control type="text" placeholder="Název položky" value={newItemName} onChange={(input) => setNewItemName(input.target.value)} autoFocus/>
+            <Form.Control type="text" placeholder={t.itemName} value={newItemName} onChange={(input) => setNewItemName(input.target.value)} autoFocus/>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>Zavřít</Button>
-          <Button variant="primary" onClick={addItem} disabled={newItemName.trim() === ''}> {addingItem ? (<Spinner animation="border" role="status" size="sm"></Spinner>):("Přidat")}</Button>
+          <Button variant="secondary" onClick={closeModal}>{t.close}</Button>
+          <Button variant="primary" onClick={addItem} disabled={newItemName.trim() === ''}> {addingItem ? (<Spinner animation="border" role="status" size="sm"></Spinner>):(<>{t.add}</>)}</Button>
         </Modal.Footer>
       </Modal>
       {loading ? (null) : (
       <Button variant="success" onClick={openModal} style={{margin: "5px 0 10px"}}>
-        <Icon path={mdiPlus} size={1} /> Přidat novou položku
+        <Icon path={mdiPlus} size={1} /> {t.addNewItem}
       </Button>)}
     </div>
   );

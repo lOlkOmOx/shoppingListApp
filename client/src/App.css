@@ -1,40 +1,18 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxanium&display=swap');
+
+.dark {
+  text-align: center;
+  background-color: #11001C;
+}
+
+.light {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body .dark {
+  background-color: #11001C;
+  height: 100vh;
 }
 
 .custom-modal .modal-dialog {
@@ -46,6 +24,224 @@
 .csscontainer {
   border-radius: 10px;
   margin-bottom: 15px;
-  border-left: solid rgb(6, 77, 135)5px;
+  border-left: solid rgb(6, 77, 135)6px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.24);
+}
+
+.dark .csscontainer, .darkk .csscontainer {
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border-left: solid #3e18b8 6px;
+  border-right: solid #3e18b8 1px;
+  border-bottom: solid #3e18b8 1px;
+  border-top: solid #3e18b8 1px;
+  background-color: #11001C;
+}
+
+.dark p{
+  color: #610094
+}
+
+.dark h1{
+  color: gray
+}
+
+.dark .nav-tabs .nav-item.show .nav-link, .dark .nav-tabs .nav-link.active {
+  border-color: #3e18b8 !important;
+  background-color: #190028 !important;
+  color: gray !important;
+  font-weight: bold;
+}
+
+.dark .nav-tabs {
+  border-color: #3e18b8 !important;
+}
+
+.dark .nav {
+  --bs-nav-link-color: gray !important
+}
+
+.dark .btn-primary, .darkk .btn-primary {
+  --bs-btn-bg: darkblue !important;
+  --bs-btn-border-color: darkblue !important;
+  --bs-btn-hover-bg: darkblue !important;
+  --bs-btn-hover-border-color: darkblue !important;
+  --bs-btn-active-bg: darkblue !important;
+  --bs-btn-active-border-color: darkblue !important;
+  --bs-btn-disabled-bg: rgb(3, 3, 56);
+  --bs-btn-disabled-border-color: rgb(3, 3, 56);
+}
+
+.dark .btn-success {
+  --bs-btn-bg: darkgreen !important;
+  --bs-btn-border-color: darkgreen !important;
+  --bs-btn-hover-bg: darkgreen !important;
+  --bs-btn-hover-border-color: darkgreen !important;
+  --bs-btn-active-bg: darkgreen !important;
+  --bs-btn-active-border-color: darkgreen !important;
+}
+
+.dark .btn-secondary, .darkk .btn-secondary {
+  --bs-btn-bg: rgb(61, 61, 61) !important;
+  --bs-btn-border-color: rgb(61, 61, 61) !important;
+  --bs-btn-hover-bg: rgb(61, 61, 61) !important;
+  --bs-btn-hover-border-color: rgb(61, 61, 61) !important;
+  --bs-btn-active-bg: rgb(61, 61, 61) !important;
+  --bs-btn-active-border-color: rgb(61, 61, 61) !important;
+}
+
+.dark .dropdown-menu {
+  --bs-dropdown-border-color: darkblue !important;
+  --bs-dropdown-bg: #190028 !important;
+  --bs-dropdown-link-color: gray !important;
+  --bs-dropdown-link-hover-bg: #3e18b8 !important;
+  --bs-dropdown-link-hover-color: white!important;
+}
+
+.dark .form-select {
+  color: lightgray;
+  background-color: black;
+  border: solid #3e18b8 1px
+}
+
+.dark .card {
+  --bs-card-border-color: #3e18b8 !important;
+  --bs-card-bg: black !important;
+  --bs-card-color: lightgray !important;
+}
+
+.dark .underlined {
+  border-bottom: solid #3e18b8 1px;
+}
+
+.light .underlined {
+  border-bottom: solid lightgray 1px;
+}
+
+.dark .btn-outline-danger {
+  --bs-btn-border-color: darkred !important;
+  --bs-btn-hover-bg: darkred !important;
+  --bs-btn-hover-border-color: darkred !important;
+}
+
+.darkk .modal-content {
+  background-color: black !important;
+  color: lightgray !important;
+  border: solid #3e18b8 1px;
+}
+
+.darkk .modal-header {
+  border-bottom: solid #3e18b8 1px
+}
+
+.darkk .modal-footer {
+  border-top: solid #3e18b8 1px
+}
+
+.darkk .underlined, .darkk ul {
+  border-bottom: solid #3e18b8 1px
+}
+
+.darkk .btn-success {
+  --bs-btn-bg: darkgreen !important;
+  --bs-btn-border-color: darkgreen !important;
+  --bs-btn-hover-bg: darkgreen !important;
+  --bs-btn-hover-border-color: darkgreen !important;
+  --bs-btn-active-bg: darkgreen !important;
+  --bs-btn-active-border-color: darkgreen !important;
+  --bs-btn-disabled-bg: #0e3121;
+  --bs-btn-disabled-border-color: #0e3121;
+}
+
+.darkk .form-control{
+  background-color: black;
+  border: solid #3e18b8 1px;
+  margin: 20px 0;
+  color: lightgray
+}
+
+.darkk .form-control:focus{
+  background-color: black;
+  color: lightgray
+}
+
+.darkk .form-control::placeholder {
+  color: lightgray; 
+}
+
+.darkk .table>:not(caption)>*>* {
+  background-color: black;
+  color: lightgray;
+  border-bottom: solid #3e18b8 1px !important
+}
+
+.darkk .card {
+  background-color: black;
+  color: lightgray;
+  border: solid #3e18b8 1px !important
+
+}
+
+.darkk .btn-danger {
+  --bs-btn-bg: darkred !important;
+  --bs-btn-border-color: darkred !important;
+  --bs-btn-hover-bg: darkred !important;
+  --bs-btn-hover-border-color: darkred !important;
+  --bs-btn-active-bg: darkred !important;
+  --bs-btn-active-border-color: darkred !important;
+}
+
+.darkk svg, svg {
+  background: none !important;
+}
+
+.darkk .CardIMG {
+  opacity: 40%;
+}
+
+.Name {
+  font-family: 'Chakra Petch', sans-serif;
+  margin-left: 20px;
+}
+
+body {
+  font-family: 'Oxanium', sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+
+  .respButton {
+    display: none
+  }
+
+}
+
+.respCard {
+  width: 15rem;
+  margin-bottom: 20px
+}
+@media screen and (min-width: 370px) {
+  .respCard {
+    width: 18rem;
+  }
+}
+
+.rText {
+  display: block;
+}
+
+.rIcon {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+  .rText {
+    display: none
+  }
+
+  .rIcon {
+    display: block
+  }
+
 }

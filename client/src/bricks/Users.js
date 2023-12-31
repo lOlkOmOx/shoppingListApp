@@ -3,8 +3,11 @@ import { Card, Button, Stack, Spinner } from "react-bootstrap"
 import usersMockup from "../data/usersDataMockup"
 import ChooseUser from "./ChooseUser";
 import Customspinner from "./Spinner"
+import { useTranslation } from './Translation';
 
 function Users(props) {
+
+    const { t } = useTranslation()
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -51,25 +54,25 @@ function Users(props) {
           setOtherUsers(oldOtherUsers => [...oldOtherUsers, removedUser]);
           setRemovingUser(false)
         } catch (error) {
-          console.error('Chyba při odebírání uživatele:', error);
+          console.error('Error:', error);
         } 
     }
 
     return (
         <div class="csscontainer" style={{padding: "10px", marginTop: "5px"}}>
-            {error ? (<p>Chyba při načítání dat</p>):(<>
+            {error ? (<p>{t.dataFailed}</p>):(<>
             {loading ? (<Customspinner variant="Bounce"/>) : (
             <div >
-                <h4>Uživatelé</h4>
+                <h4>{t.users}</h4>
                     <Stack direction="horizontal" className="flex-wrap">    
                         <div className="p-2"> 
                             {owner.map(owner => (
                                 <div key={owner.id}>
-                                    <Card border="primary" style={{ width: '18rem', marginBottom: '20px' }}>
-                                        <Card.Img variant="top" src={owner.img} />
+                                    <Card border="primary" className="respCard">
+                                        <Card.Img variant="top" src={owner.img} className="CardIMG"/>
                                         <Card.Body>
                                             <Card.Title>{owner.name} {owner.surname}</Card.Title>
-                                            <Button variant="info" disabled>Majitel seznamu</Button>
+                                            <Button variant="info" disabled>{t.owner}</Button>
                                         </Card.Body>
                                     </Card>
                                 </div>
@@ -77,17 +80,17 @@ function Users(props) {
                         </div>
                         {invitedUsers.map(invited => (
                             <div key={invited.id} className="p-2" >
-                                <Card border="secondary" style={{ width: '18rem', marginBottom: '20px' }}>
-                                    <Card.Img variant="top" src={invited.img} />
+                                <Card border="secondary" className="respCard">
+                                    <Card.Img variant="top" src={invited.img} className="CardIMG"/>
                                     <Card.Body>
                                         <Card.Title>{invited.name} {invited.surname}</Card.Title>
-                                        {props.owner ? (<Button variant="danger" onClick={() => {removeUser(invited.id); setRemovingUserId(invited.id)}}>{removingUser && removingUserId === invited.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : ("Odebrat uživatele")}</Button>) : (<Button variant="secondary" disabled>Člen</Button>) }
+                                        {props.owner ? (<Button variant="danger" onClick={() => {removeUser(invited.id); setRemovingUserId(invited.id)}}>{removingUser && removingUserId === invited.id ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : (<>{t.removeUser}</>)}</Button>) : (<Button variant="secondary" disabled>{t.userIndicator}</Button>) }
                                     </Card.Body>
                                 </Card>
                             </div>
                         ))}
                     </Stack>
-                 <ChooseUser otherUsers={otherUsers} onAddUser={addUser} owner={props.owner} onClose={props.onClose}/>   
+                 <ChooseUser otherUsers={otherUsers} onAddUser={addUser} owner={props.owner} onClose={props.onClose} dark={props.dark}/>   
             </div>)}</>)}
             
         </div>

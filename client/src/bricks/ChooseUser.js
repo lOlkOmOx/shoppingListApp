@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Button, Modal, Form, Spinner } from "react-bootstrap";
 import Icon from '@mdi/react';
 import { mdiPlus, mdiArrowLeftBoldCircleOutline } from '@mdi/js';
+import { useTranslation } from './Translation';
 
 function ChooseUser(props) {
+
+    const { t } = useTranslation()
   
 //Pomocné pro modal    
     const [showModal, setShowModal] = useState(false)
@@ -27,7 +30,7 @@ function ChooseUser(props) {
           setSelectedUser(null)
           setRemovingSelf(false)
         } catch (error) {
-          console.error('Chyba při opouštění seznamu:', error)
+          console.error('error:', error)
         } 
       }
 
@@ -40,7 +43,7 @@ function ChooseUser(props) {
           props.onClose()
           setRemovingSelf(false)
         } catch (error) {
-          console.error('Chyba při opouštění seznamu:', error)
+          console.error('error:', error)
         } 
       }
 
@@ -48,21 +51,21 @@ function ChooseUser(props) {
         <div>
             {props.owner ? ( 
                 <Button variant="success" onClick={openModal} style={{marginTop: "5px"}}>
-                    <Icon path={mdiPlus} size={1} /> Přidat dalšího uživatele
+                    <Icon path={mdiPlus} size={1} /> {t.addUser}
                 </Button>
             ) : (
-                <Button variant="danger" style={{marginTop: "5px"}} onClick={() => removeSelf()}>{removingSelf ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : (<><Icon path={mdiArrowLeftBoldCircleOutline} size={1} /> Opustit seznam</>)} </Button>
+                <Button variant="danger" style={{marginTop: "5px"}} onClick={() => removeSelf()}>{removingSelf ? (<Spinner animation="border" role="status" size="sm"></Spinner>) : (<><Icon path={mdiArrowLeftBoldCircleOutline} size={1} /> {t.leaveList}</>)} </Button>
             ) }
-            <Modal show={showModal} onHide={closeModal}>
+            <Modal show={showModal} onHide={closeModal} className={props.dark ? "darkk" : null}>
                 <Modal.Header>
-                    <Modal.Title>Vyberte uživatele</Modal.Title>
+                    <Modal.Title>{t.chooseUser}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Volní uživatelé</Form.Label>
+                            <Form.Label>{t.freeUsers}</Form.Label>
                             <Form.Control as="select" onChange={selectingUser} required>
-                            <option>Vyberte uživatele</option>
+                            <option>{t.chooseUser}</option>
                                 {props.otherUsers.map(user => (
                                     <option key={user.id} value={user.id}>{user.name} {user.surname}</option>
                                 ))}
@@ -71,11 +74,11 @@ function ChooseUser(props) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={closeModal}>Zavřít</Button>
+                    <Button variant="secondary" onClick={closeModal}>{t.close}</Button>
                     {selectedUser === null ? ( 
-                        <Button variant="primary" onClick={addUser} disabled> Přidat uživatele</Button>
+                        <Button variant="primary" onClick={addUser} disabled> {t.add}</Button>
                     ) : (
-                        <Button variant="primary" onClick={addUser}>{addingUser ? (<Spinner animation="border" role="status" size="sm"></Spinner>):("Přidat uživatele")} </Button> 
+                        <Button variant="primary" onClick={addUser}>{addingUser ? (<Spinner animation="border" role="status" size="sm"></Spinner>):(<>{t.add}</>)} </Button> 
                     )}
                 </Modal.Footer>
             </Modal>

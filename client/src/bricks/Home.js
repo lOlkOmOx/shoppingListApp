@@ -3,13 +3,15 @@ import userDataMockup from '../data/usersDataMockup'
 import ShoppingLists from "./ShoppingLists";
 import { Form, Stack } from "react-bootstrap"
 import Customspinner from "./Spinner"
+import { useTranslation } from './Translation';
 
-function Home () {
+function Home (props) {
+
+const { t } = useTranslation()
 
 const [userId, setUserId] = useState("100")
 
 const changeUser = (id) => {
-  console.log("Vybraný uživatel:", id.target.value)
   setUserId(id.target.value)
 }
   const [data, setData] = useState([])
@@ -38,10 +40,10 @@ const changeUser = (id) => {
     return(
         <div style={{margin: "20px"}}>
           <div className="csscontainer" style={{padding:"20px"}}>
-            <h1>Zvol uživatele aplikace</h1> 
+            <h1>{t.changeUser}</h1> 
             {loading ? (<Customspinner variant={"Bounce"} />) : (
               <Stack direction="horizontal" fill gap={5}>
-              {error ? (<p>Chyba při načítání dat</p>) : (
+              {error ? (<p>{t.dataFailed}</p>) : (
                 <Form.Select onChange={changeUser} value={userId}>
                   {data.map(user => (
                   <option key={user.id} value={user.id}>{user.name} {user.surname}, ID: {user.id}</option>
@@ -50,7 +52,7 @@ const changeUser = (id) => {
               </Stack>
             )}
           </div>
-          <ShoppingLists userId={userId}/>
+          <ShoppingLists userId={userId} dark={props.dark}/>
         </div>
     )
 }

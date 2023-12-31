@@ -3,6 +3,8 @@ import dataMockup from "../data/dataMockup";
 import ShoppingListItem from "./ShoppingListItem";
 import { Stack, Button, Tab, Tabs, Modal, Form, FloatingLabel, Spinner } from "react-bootstrap"
 import Customspinner from "./Spinner"
+import { useTranslation } from './Translation';
+
 
 function ShoppingLists(props) {
 
@@ -10,7 +12,8 @@ function ShoppingLists(props) {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-      
+    const { t } = useTranslation()
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -42,7 +45,7 @@ function ShoppingLists(props) {
             const updatedLists = shoppingList.filter(list => list.id !== id)
             setShoppingList(updatedLists)
         } catch (error) {
-            console.error('Chyba při mazání seznamu:', error)
+            console.error('Error:', error)
         } finally {
             setDeletingList(false)
             setShowModal(false)
@@ -58,7 +61,7 @@ function ShoppingLists(props) {
             const updatedLists = shoppingList.map(list => {if (list.id === id) {return {...list, archived: true}} return list})
             setShoppingList(updatedLists)
         } catch (error) {
-            console.error('Chyba při archivování seznamu:', error)
+            console.error('Error:', error)
         } finally {
             setArchivingList(false)
         }
@@ -72,7 +75,7 @@ function ShoppingLists(props) {
             const updatedLists = shoppingList.map(list => {if (list.id === id) {return {...list, archived: false}} return list})
             setShoppingList(updatedLists)
         } catch (error) {
-            console.error('Chyba při reaktivování seznamu:', error)
+            console.error('Error:', error)
         } finally {
             setArchivingList(false)
         }
@@ -92,7 +95,7 @@ function ShoppingLists(props) {
             setNewListName("")
             setCreatingList(false)
         } catch (error) {
-            console.error('Chyba při vytváření seznamu:', error)
+            console.error('Error:', error)
         } 
     }
 
@@ -103,17 +106,17 @@ function ShoppingLists(props) {
             const updatedLists = shoppingList.map(list => {if (list.id === listId) {return { ...list, name: newName }} return list})
             setShoppingList(updatedLists)
         } catch (error) {
-            console.error('Chyba při vytváření seznamu:', error)
+            console.error('Error:', error)
         } 
     }
 
     return(
         <div className="csscontainer" style={{padding: "20px"}}>
-            {error ? (<p>Chyba při načítání dat</p>) : (<>
-            <h1 style={{textAlign: "center", marginBottom: "40px"}}>Shop.io app</h1>
+            {error ? (<p>{t.dataFailed}</p>) : (<>
+            
             {loading ? (<Customspinner variant={"Bounce"} />) : (   
             <Tabs defaultActiveKey="all" className="mb-3" fill justify>
-                <Tab eventKey="all" title="Nákupní seznamy">
+                <Tab eventKey="all" title={t.activeShoppingLists}>
                     <Stack direction="horizontal" gap={3} className="flex-wrap">
                         {shoppingList.map(list => (
                             !list.archived ? (
@@ -126,13 +129,15 @@ function ShoppingLists(props) {
                                         onArchive={() => archiveList(list.id)}
                                         onListNameChange={newName => renameList(list.id, newName)}
                                         deleting={deletingList}
-                                        archiving={archivingList}/>
+                                        archiving={archivingList}
+                                        dark={props.dark}
+                                        />
                                 ) : (null)
                             ) : (null)
                         ))}
                     </Stack>
                 </Tab>
-                <Tab eventKey="archiv" title="Archivované seznamy">
+                <Tab eventKey="archiv" title={t.archivedShoppingLists}>
                     <Stack direction="horizontal" gap={3} className="flex-wrap">
                         {shoppingList.map(list => (
                             list.archived ? (
@@ -144,7 +149,9 @@ function ShoppingLists(props) {
                                         onDelete={() => deleteList(list.id)}
                                         onUnArchive={() => unArchiveList(list.id)}
                                         deleting={deletingList}
-                                        archiving={archivingList}/>
+                                        archiving={archivingList}
+                                        dark={props.dark}
+                                        />
                                 ) : (null)
                             ) : (null)
                         ))}
@@ -152,19 +159,17 @@ function ShoppingLists(props) {
                 </Tab>
             </Tabs>)}</>)}
 
-    {loading || error ? (null):(<Button variant="success" style={{marginTop: "10px"}} onClick={() => setShowModal(true)}>Vytvořit nový seznam</Button>)}
-    <Modal show={showModal} onHide={() => setShowModal(false)}>
+    {loading || error ? (null):(<Button variant="success" style={{marginTop: "10px"}} onClick={() => setShowModal(true)}>{t.newShoppingList}</Button>)}
+    <Modal show={showModal} onHide={() => setShowModal(false)} className={props.dark ? "darkk" : null}>
         <Modal.Header >
-            <Modal.Title>Nový seznam</Modal.Title>
+            <Modal.Title>{t.newShoppingList}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <FloatingLabel controlId="floatingInput" label="Název seznamu" className="mb-3">
-            <Form.Control type="text" placeholder="Název seznamu" value={newListName} onChange={(e) => setNewListName(e.target.value)}   />
-        </FloatingLabel>
+            <Form.Control type="text" placeholder={t.setName} value={newListName} onChange={(e) => setNewListName(e.target.value)}   />
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>Zrušit</Button>
-            <Button variant="success" onClick={createNewList} disabled={newListName.trim() === ''}>{creatingList ? (<Spinner animation="border" role="status" size="sm"></Spinner>):("Vytvořit")}</Button>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>{t.cancel}</Button>
+            <Button variant="success" onClick={createNewList} disabled={newListName.trim() === ''}>{creatingList ? (<Spinner animation="border" role="status" size="sm"></Spinner>):(<>{t.save}</>)}</Button>
         </Modal.Footer>
     </Modal>
     </div>

@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react"
 import { Modal, Button } from 'react-bootstrap'
 import Customspinner from './Spinner'
+import { useTranslation } from './Translation';
 
 function Preview(props) {
   
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,8 +23,8 @@ function Preview(props) {
   }, [])
 
     return (
-      <Modal show={true} onHide={props.onClose} centered>
-        {error ? (<><Modal.Header/><Modal.Body><p>Chyba při načítání dat</p></Modal.Body></>) : (<>
+      <Modal show={true} onHide={props.onClose} centered className={props.dark ? "darkk" : null}>
+        {error ? (<><Modal.Header/><Modal.Body><p>{t.dataFailed}</p></Modal.Body></>) : (<>
         {loading ? (<>
         <Modal.Header/>
         <Modal.Body>
@@ -31,24 +33,24 @@ function Preview(props) {
         </>
         ) : (<>
         <Modal.Header>
-          <Modal.Title>Náhled seznamu: {props.shoppingList.name}</Modal.Title>
+          <Modal.Title>{t.previewHeader} {props.shoppingList.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h6 style={{paddingBottom: "10px", borderBottom: "solid lightgray 1px"}}>Majitel: {props.ownerName} {props.owner ? ("(vy)") : (null)}</h6>
-          <h6>Položky:</h6>
-            <ul style={{paddingBottom: "10px", borderBottom: "solid lightgray 1px"}}>
+          <h6 style={{paddingBottom: "10px"}} className="underlined">{t.previewOwner} {props.ownerName} {props.owner ? (<>{t.previewYouSign}</>) : (null)}</h6>
+          <h6>{t.items}:</h6>
+            <ul style={{paddingBottom: "10px"}}>
               {props.shoppingList.items.map(item => (
                 <li key={item.id}>{item.name}</li>
               ))}
             </ul>
           {props.owner ? ( 
-            <p style={{color: "Red"}}>Seznam můžete spravovat po odebrání z archivu.</p>
+            <p style={{color: "Red"}}>{t.previewInfoOwner}</p>
             ):(
-            <p style={{color: "Red"}}>Seznam lze znovu spravovat pouze když jej majitel - {props.ownerName} odebere z archivu.</p>
+            <p style={{color: "Red"}}>{t.previewInfoUser1} {props.ownerName} {t.previewInfoUser2}</p>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.onClose}>Zavřít</Button>
+          <Button variant="secondary" onClick={props.onClose}>{t.close}</Button>
         </Modal.Footer></>
         )}</>)}
       </Modal>
