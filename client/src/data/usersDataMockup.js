@@ -26,27 +26,6 @@ const usersDataMockup = [
             surname: "Šedivý",
             role: "user",
             img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?w=1380&t=st=1699686446~exp=1699687046~hmac=ccba31b12cf8eca085e5190e8995db8846f9447e97a96dd5119f7b2d9f1a32e2"
-        },
-        {   
-            id: "104",
-            name: "Michaela",
-            surname: "Čermáková",
-            role: "user",
-            img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5908.jpg?w=1380&t=st=1699686488~exp=1699687088~hmac=c76cc9cbfbd5baaeda93876b6119a7ba3483c3d99fc89beec929e6c23446b903"
-        },
-        {   
-            id: "105",
-            name: "Miroslav",
-            surname: "Divný",
-            role: "none",
-            img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?w=1380&t=st=1699686446~exp=1699687046~hmac=ccba31b12cf8eca085e5190e8995db8846f9447e97a96dd5119f7b2d9f1a32e2"
-        },
-        {   
-            id: "106",
-            name: "Stanislav",
-            surname: "Tuček",
-            role: "none",
-            img: "https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?w=1380&t=st=1699686446~exp=1699687046~hmac=ccba31b12cf8eca085e5190e8995db8846f9447e97a96dd5119f7b2d9f1a32e2"
         }
 ]
 

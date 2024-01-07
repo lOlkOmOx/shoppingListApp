@@ -44,5 +44,12 @@
     "setName": "Name",
     "deleteConfirmHeader": "Confirmation",
     "deleteConfirmText1": "Do you want really delete this list?",
-    "deleteConfirmText2": "This action is non-refundable."
+    "deleteConfirmText2": "This action is non-refundable.",
+    "graphH": "Items",
+    "graphRequired": "Required items",
+    "graphBought": "Bought items",
+    "graf2": "Items count",
+    "graf2h1": "All items",
+    "graf3h1": "Item states",
+    "stats": "Stats"
 }

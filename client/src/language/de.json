@@ -44,5 +44,12 @@
     "setName": "Name",
     "deleteConfirmHeader": "Bestätigung",
     "deleteConfirmText1": "Möchten Sie wirklich diese Einkaufsliste löschen?",
-    "deleteConfirmText2": "Diese Aktion ist nicht rückgängig."
+    "deleteConfirmText2": "Diese Aktion ist nicht rückgängig.",
+    "graphH": "Anteil der Artikel",
+    "graphRequired": "Fehlende Artikel",
+    "graphBought": "Gekaufte Artikel",
+    "graf2": "Artikel Anzahl",
+    "graf2h1": "Artikel in allen Einkaufslisten",
+    "graf3h1": "Anteil aller Artikel",
+    "stats": "Statistiken"
 }

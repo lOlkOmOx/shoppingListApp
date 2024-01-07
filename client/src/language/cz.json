@@ -44,5 +44,12 @@
     "setName": "Název seznamu",
     "deleteConfirmHeader": "Potvrzení smazání",
     "deleteConfirmText1": "Opravdu chcete smazat tento nákupní seznam?",
-    "deleteConfirmText2": "Tato akce je nevratná."
+    "deleteConfirmText2": "Tato akce je nevratná.",
+    "graphH": "Podíl položek",
+    "graphRequired": "Chybějící položky",
+    "graphBought": "Zakoupené položky",
+    "graf2": "Počet položek",
+    "graf2h1": "Počet položek v seznamech",
+    "graf3h1": "Podíl všech položek",
+    "stats": "Statistiky"
 }

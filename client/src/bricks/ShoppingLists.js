@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import dataMockup from "../data/dataMockup";
 import ShoppingListItem from "./ShoppingListItem";
-import { Stack, Button, Tab, Tabs, Modal, Form, FloatingLabel, Spinner } from "react-bootstrap"
+import { Stack, Button, Tab, Tabs, Modal, Form, Spinner } from "react-bootstrap"
 import Customspinner from "./Spinner"
 import { useTranslation } from './Translation';
+import ListGraph from './ListGraph'
 
 
 function ShoppingLists(props) {
@@ -136,6 +137,8 @@ function ShoppingLists(props) {
                             ) : (null)
                         ))}
                     </Stack>
+                    {loading || error ? (null):(<Button variant="success" style={{margin: "10px 0"}} onClick={() => setShowModal(true)}>{t.newShoppingList}</Button>)}
+                    <ListGraph lists={shoppingList} user={props.userId}/>
                 </Tab>
                 <Tab eventKey="archiv" title={t.archivedShoppingLists}>
                     <Stack direction="horizontal" gap={3} className="flex-wrap">
@@ -157,9 +160,8 @@ function ShoppingLists(props) {
                         ))}
                     </Stack>
                 </Tab>
-            </Tabs>)}</>)}
-
-    {loading || error ? (null):(<Button variant="success" style={{marginTop: "10px"}} onClick={() => setShowModal(true)}>{t.newShoppingList}</Button>)}
+            </Tabs>
+            )}</>)}
     <Modal show={showModal} onHide={() => setShowModal(false)} className={props.dark ? "darkk" : null}>
         <Modal.Header >
             <Modal.Title>{t.newShoppingList}</Modal.Title>
@@ -172,6 +174,7 @@ function ShoppingLists(props) {
             <Button variant="success" onClick={createNewList} disabled={newListName.trim() === ''}>{creatingList ? (<Spinner animation="border" role="status" size="sm"></Spinner>):(<>{t.save}</>)}</Button>
         </Modal.Footer>
     </Modal>
+    
     </div>
     )
 }

@@ -23,9 +23,22 @@ body .dark {
 
 .csscontainer {
   border-radius: 10px;
-  margin-bottom: 15px;
   border-left: solid rgb(6, 77, 135)6px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.24);
+  margin-bottom: 15px;
+}
+
+.csscontainer2 {
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.24);
+}
+
+.dark .csscontainer2, .darkk .csscontainer2 {
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border: solid #3e18b8 1px;
+  background-color: #11001C;
 }
 
 .dark .csscontainer, .darkk .csscontainer {

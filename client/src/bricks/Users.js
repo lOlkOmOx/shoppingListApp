@@ -61,7 +61,7 @@ function Users(props) {
     return (
         <div class="csscontainer" style={{padding: "10px", marginTop: "5px"}}>
             {error ? (<p>{t.dataFailed}</p>):(<>
-            {loading ? (<Customspinner variant="Bounce"/>) : (
+            {loading ? (null) : (
             <div >
                 <h4>{t.users}</h4>
                     <Stack direction="horizontal" className="flex-wrap">    

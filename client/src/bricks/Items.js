@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, Form, Table, Spinner } from 'react-bootstrap'
+import { Button, Modal, Form, Table, Spinner, Container, Row, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Icon from '@mdi/react';
 import { mdiPlus, mdiTrashCanOutline, mdiCheck, mdiCartArrowDown, mdiCheckAll, mdiFilter } from '@mdi/js';
 import Customspinner from "./Spinner"
 import { useTranslation } from './Translation';
+import DetailGraph from './DetailGraph'
+
 
 function Items(props) {
 
@@ -20,11 +22,11 @@ function Items(props) {
       } catch (error) {
         setError(error)
         setLoading(false)
+        
       }
     }
     fetchData()
   }, [])
-
 
   const [showModal, setModalShow] = useState(false)
   const [newItemName, setNewItemName] = useState("")
@@ -90,9 +92,15 @@ function Items(props) {
 }
         
   return (
+    
     <div style={{padding: "10px"}} class="csscontainer">
+      
+      <Container fluid>
+        <Row>
+          <Col lg={9}>
       {error ? (<p>{t.dataFailed}</p>):(<>
-      {loading ? (<Customspinner variant="Bounce"/>):(
+      {loading ? (null):(
+
       <Table hover>
         <thead>
           <tr>
@@ -117,6 +125,15 @@ function Items(props) {
           ))}
         </tbody>
       </Table>)}</>)}
+      </Col>
+      <Col xs={12} sm={12} md={12} lg={3}>
+      {loading ? (null):(
+        <div>
+      <DetailGraph items={items} style={{ width: '100%' }}/>
+      </div>)}
+      </Col>
+      </Row>
+      </Container>
       <Modal show={showModal} onHide={closeModal} className={props.dark ? "darkk" : null}>
         <Modal.Header>
           <Modal.Title>{t.addNewItem}</Modal.Title>
@@ -135,6 +152,8 @@ function Items(props) {
       <Button variant="success" onClick={openModal} style={{margin: "5px 0 10px"}}>
         <Icon path={mdiPlus} size={1} /> {t.addNewItem}
       </Button>)}
+
+      
     </div>
   );
 }
